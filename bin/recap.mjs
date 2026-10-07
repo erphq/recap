@@ -11,8 +11,8 @@ import { waitingNow } from '../lib/needs.mjs';
 // Piping into head or similar closes stdout early; that is not an error.
 process.stdout.on('error', (err) => err.code === 'EPIPE' && process.exit(0));
 
-const HELP = `recap [range] [options]     one-line recap of the window
-recap needs [range]             chats waiting on you now (no model involved)
+const HELP = `recap [range] [options]   one-line recap of the window
+recap needs [range]       chats waiting on you now (no model involved)
 
   range            3h, 6h (default), 12h, 24h, 2d, today
   --hours N        same as "Nh"
