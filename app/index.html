@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:" />
+    <title>Recap</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="bar" id="bar">
+      <div class="bar-list">
+        <div class="ranges" id="ranges" role="tablist" aria-label="Time range"></div>
+        <div class="actions">
+          <button class="icon" id="copy" type="button" title="Copy as Markdown (⇧⌘C)" aria-label="Copy as Markdown">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="5.5" y="5.5" width="8" height="8" rx="1.8" />
+              <path d="M10.5 3.4A1.9 1.9 0 0 0 8.6 1.5H4.4a1.9 1.9 0 0 0-1.9 1.9v4.2a1.9 1.9 0 0 0 1.9 1.9" />
+            </svg>
+          </button>
+          <button class="icon" id="refresh" type="button" title="Refresh (⌘R)" aria-label="Refresh">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M13.5 8a5.5 5.5 0 1 1-1.6-3.9" />
+              <path d="M13.6 2.2v3h-3" />
+            </svg>
+          </button>
+          <button class="icon" id="open-settings" type="button" title="Settings (⌘,)" aria-label="Settings">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+              <path d="M2.5 4.5h6M11.5 4.5h2M2.5 11.5h2M7.5 11.5h6" />
+              <circle cx="10" cy="4.5" r="1.5" />
+              <circle cx="6" cy="11.5" r="1.5" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div class="bar-settings">
+        <button class="back" id="back" type="button" aria-label="Back to recap">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M10 3.5 5.5 8l4.5 4.5" />
+          </svg>
+          <span>Settings</span>
+        </button>
+      </div>
+    </header>
+
+    <main id="list-view">
+      <p class="meta" id="meta" aria-live="polite"></p>
+      <section class="card needs" id="needs" hidden>
+        <h2>Needs you</h2>
+        <ul class="list" id="needs-list"></ul>
+      </section>
+      <div id="groups"></div>
+      <p class="empty" id="empty" hidden></p>
+    </main>
+
+    <main id="settings-view" hidden>
+      <h2>Summaries</h2>
+      <section class="card">
+        <div class="set-row">
+          <div class="set-text">
+            <div class="set-label">Write recaps with</div>
+            <div class="set-sub" id="engine-sub"></div>
+          </div>
+          <select id="engine" class="field select">
+            <option value="auto">Automatic</option>
+            <option value="openrouter">OpenRouter</option>
+            <option value="local">Local model</option>
+            <option value="codex">Codex</option>
+            <option value="claude">Claude Code</option>
+          </select>
+        </div>
+      </section>
+
+      <h2>OpenRouter</h2>
+      <section class="card">
+        <div class="set-row">
+          <div class="set-text">
+            <div class="set-label">Account</div>
+            <div class="set-sub" id="or-sub">Not connected</div>
+          </div>
+          <div class="set-control" id="or-control"></div>
+        </div>
+        <div class="set-row" id="or-paste">
+          <input id="or-key" class="field grow" type="password" placeholder="Or paste a key: sk-or-v1-…" autocomplete="off" spellcheck="false" />
+          <button class="btn" id="or-save" type="button">Save</button>
+        </div>
+        <div class="set-row">
+          <div class="set-text">
+            <div class="set-label">Model</div>
+            <div class="set-sub" id="model-sub">Any model with structured output</div>
+          </div>
+          <input id="model" class="field wide" list="models" spellcheck="false" autocomplete="off" />
+          <datalist id="models"></datalist>
+        </div>
+      </section>
+
+      <h2>Local model</h2>
+      <section class="card">
+        <div class="set-row">
+          <div class="set-text">
+            <div class="set-label">Server</div>
+            <div class="set-sub">Ollama, LM Studio, llama.cpp, vLLM</div>
+          </div>
+          <input id="local-url" class="field wide" placeholder="http://localhost:11434/v1" spellcheck="false" autocomplete="off" />
+        </div>
+        <div class="set-row">
+          <div class="set-text">
+            <div class="set-label">Model</div>
+            <div class="set-sub" id="local-sub">Check lists what the server has</div>
+          </div>
+          <input id="local-model" class="field" list="local-models" placeholder="qwen3:8b" spellcheck="false" autocomplete="off" />
+          <datalist id="local-models"></datalist>
+          <button class="btn" id="local-check" type="button">Check</button>
+        </div>
+        <div class="set-row">
+          <div class="set-text">
+            <div class="set-label">API key</div>
+            <div class="set-sub" id="local-key-sub">Only if your server asks for one</div>
+          </div>
+          <input id="local-key" class="field wide" type="password" placeholder="Optional" autocomplete="off" spellcheck="false" />
+        </div>
+      </section>
+      <p class="note error" id="set-error" hidden></p>
+
+      <h2>General</h2>
+      <section class="card">
+        <label class="set-row" for="notify">
+          <div class="set-text">
+            <div class="set-label">Notify me when a chat needs me</div>
+            <div class="set-sub">Claude and Codex chats waiting on your answer</div>
+          </div>
+          <input type="checkbox" class="switch" id="notify" />
+        </label>
+        <label class="set-row" for="login">
+          <div class="set-text">
+            <div class="set-label">Open at login</div>
+            <div class="set-sub" id="login-sub" hidden></div>
+          </div>
+          <input type="checkbox" class="switch" id="login" />
+        </label>
+        <div class="set-row">
+          <div class="set-text"><div class="set-label">Quit Recap</div></div>
+          <button class="btn" id="quit" type="button">Quit</button>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status"></div>
+    <script src="renderer.js"></script>
+  </body>
+</html>

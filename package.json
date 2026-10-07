@@ -1,0 +1,32 @@
+{
+  "name": "recap",
+  "productName": "Recap",
+  "version": "0.1.0",
+  "description": "One-line recap of what you got done with your AI agents (Claude Code, Codex) and git, in your macOS menu bar.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/erphq/recap.git"
+  },
+  "homepage": "https://github.com/erphq/recap#readme",
+  "type": "module",
+  "main": "app/main.mjs",
+  "bin": {
+    "recap": "bin/recap.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "electron .",
+    "demo": "electron . --demo",
+    "make-app": "bash scripts/make-app.sh",
+    "recap": "node bin/recap.mjs"
+  },
+  "devDependencies": {
+    "electron": "43.7.1"
+  },
+  "trustedDependencies": [
+    "electron"
+  ]
+}

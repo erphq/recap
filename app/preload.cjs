@@ -1,0 +1,31 @@
+const { contextBridge, ipcRenderer } = require('electron');
+
+contextBridge.exposeInMainWorld('recap', {
+  load: (range) => ipcRenderer.invoke('recap:load', range),
+  refresh: (range) => ipcRenderer.invoke('recap:refresh', range),
+  copy: (text) => ipcRenderer.invoke('recap:copy', text),
+  hide: () => ipcRenderer.send('recap:hide'),
+  open: (url) => ipcRenderer.invoke('recap:open', url),
+  appIcons: () => ipcRenderer.invoke('recap:app-icons'),
+  setHeight: (h) => ipcRenderer.send('recap:height', h),
+  rendered: () => ipcRenderer.send('recap:rendered'),
+  onProgress: (fn) => ipcRenderer.on('recap:progress', (_e, p) => fn(p)),
+  onCommand: (fn) => ipcRenderer.on('recap:command', (_e, c) => fn(c)),
+  onShown: (fn) => ipcRenderer.on('recap:shown', () => fn()),
+  settings: {
+    get: () => ipcRenderer.invoke('settings:get'),
+    models: () => ipcRenderer.invoke('settings:models'),
+    connect: () => ipcRenderer.invoke('settings:connect'),
+    cancelConnect: () => ipcRenderer.invoke('settings:cancel-connect'),
+    saveKey: (key) => ipcRenderer.invoke('settings:save-key', key),
+    disconnect: () => ipcRenderer.invoke('settings:disconnect'),
+    setModel: (model) => ipcRenderer.invoke('settings:set-model', model),
+    setLogin: (on) => ipcRenderer.invoke('settings:set-login', on),
+    setEngine: (engine) => ipcRenderer.invoke('settings:set-engine', engine),
+    setLocal: (patch) => ipcRenderer.invoke('settings:set-local', patch),
+    saveLocalKey: (key) => ipcRenderer.invoke('settings:save-local-key', key),
+    checkLocal: () => ipcRenderer.invoke('settings:check-local'),
+    setNotify: (on) => ipcRenderer.invoke('settings:set-notify', on),
+    quit: () => ipcRenderer.invoke('app:quit'),
+  },
+});

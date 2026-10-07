@@ -1,0 +1,30 @@
+{
+  "version": 2,
+  "range": "6h",
+  "engine": "local",
+  "model": "qwen3:8b",
+  "warning": null,
+  "stats": { "claude": 6, "codex": 3, "sessions": 9, "commits": 23, "repos": 3 },
+  "needsYou": [
+    { "text": "Approve the database migration plan", "sessions": [1] },
+    { "text": "Pick a logo from the nine options", "sessions": [4] }
+  ],
+  "items": [
+    { "tag": "Billing", "line": "Moving invoices to Stripe; 42 of 42 tests pass", "status": "running", "sessions": [1] },
+    { "tag": "Billing", "line": "Fixed rounding in tax totals for EU invoices", "status": "done", "sessions": [2] },
+    { "tag": "Docs site", "line": "Launched the docs site on Vercel with 14 guides", "status": "done", "sessions": [3] },
+    { "tag": "Docs site", "line": "Drafted three logo directions; one recommended", "status": "waiting", "sessions": [4] },
+    { "tag": "Mobile app", "line": "Rebuilt onboarding into three simple screens", "status": "done", "sessions": [5] },
+    { "tag": "Mobile app", "line": "Cut cold start from 2.1 s to 1.3 s", "status": "running", "sessions": [6] },
+    { "tag": "Search", "line": "Benchmarking search: 56% vs 76% recall so far", "status": "done", "sessions": [7] }
+  ],
+  "sessions": [
+    { "n": 1, "app": "claude", "title": "Stripe invoices", "link": "claude://code/new", "helper": false, "active": true, "last": "2026-01-01T00:00:00Z" },
+    { "n": 2, "app": "claude", "title": "Tax rounding", "link": "claude://code/new", "helper": false, "active": false, "last": "2026-01-01T00:00:00Z" },
+    { "n": 3, "app": "codex", "title": "Docs launch", "link": "codex://threads", "helper": false, "active": false, "last": "2026-01-01T00:00:00Z" },
+    { "n": 4, "app": "codex", "title": "Logo ideas", "link": "codex://threads", "helper": false, "active": false, "last": "2026-01-01T00:00:00Z" },
+    { "n": 5, "app": "claude", "title": "Onboarding", "link": "claude://code/new", "helper": false, "active": false, "last": "2026-01-01T00:00:00Z" },
+    { "n": 6, "app": "codex", "title": "Cold start", "link": "codex://threads", "helper": false, "active": true, "last": "2026-01-01T00:00:00Z" },
+    { "n": 7, "app": "claude", "title": "Search eval", "link": "claude://code/new", "helper": false, "active": false, "last": "2026-01-01T00:00:00Z" }
+  ]
+}

@@ -1,0 +1,5 @@
+.cache/
+node_modules/
+Recap.app/
+settings.json
+.DS_Store
