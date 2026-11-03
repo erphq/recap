@@ -24,7 +24,7 @@
     "recap": "node bin/recap.mjs"
   },
   "devDependencies": {
-    "electron": "43.7.1"
+    "electron": "43.8.7"
   },
   "trustedDependencies": [
     "electron"
